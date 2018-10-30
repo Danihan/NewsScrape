@@ -1,0 +1,72 @@
+<div class="section">
+  <div class="container">
+    <div class="level">
+      <div class="level-left">
+        <div>
+          <h1 class="title">News</h1>
+          <p class="subtitle is-7"><small>Last Scraped: {{lastScraped}}</small></p>
+        </div>
+      </div>
+      <div class="level-right"><a href="/scrape" class="button">Force scrape</a></div>
+    </div>
+
+    <hr>
+
+    <div class="tabs is-centered is-large is-fullwidth">
+      <ul>
+        <li {{#if isTypeFresh}}class="is-active"{{/if}}><a href="/fresh">Fresh</a></li>
+        <li {{#unless isTypeFresh}}class="is-active"{{/unless}}><a href="/saved">Saved</a></li>
+      </ul>
+    </div>
+
+    {{#each articles as |article|}}
+    <div class="card">
+      <div class="card-content">
+        <article class="media">
+          <div class="media-content">
+            <div class="content">
+              <p>
+                <strong>{{article.headline}}</strong>
+                <br>
+                {{article.summary}}
+              </p>
+            </div>
+
+            <article class="media">
+              <div class="media-content">
+                <div class="content">
+                  <p><small><strong>Comments:</strong></small></p>
+                </div>
+                {{#each article.comments}}
+                <div class="level">
+                  <div class="level-left"><div class="content"><p>{{this}}</p></div></div>
+                  <div class="level-right"><a href="/articles/{{article.id}}/comments/{{@index}}/delete"><button class="delete"></button></a></div>
+                </div>
+
+                <hr />
+                {{/each}}
+
+                <form method="POST" action="/articles/{{article.id}}/comments">
+                  <div class="field">
+                    <p class="control">
+                      <input type="text" class="input" name="comment" placeholder="Add a comment..." />
+                    </p>
+                  </div>
+                </form>
+              </div>
+            </article>
+          </div>
+          <div class="media-right">
+            <a href="/articles/{{article.id}}/delete" class="button is-danger"><span class="icon is-small"><i class="fas fa-trash"></i></span></a>
+            {{#if article.saved}}
+            <a href="/articles/{{article.id}}/unsave" class="button is-primary"><span class="icon is-small"><i class="fas fa-bookmark"></i></span></a>
+            {{else}}
+            <a href="/articles/{{article.id}}/save" class="button"><span class="icon is-small"><i class="fas fa-bookmark"></i></span></a>
+            {{/if}}
+          </div>
+        </article>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
