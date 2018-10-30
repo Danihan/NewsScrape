@@ -1,0 +1,15 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  background: #f6f6f6;
+}
+
+.media .media {
+  margin-left: 2em
+}
+
+.card + .card {
+  margin-top: 1em
+}
